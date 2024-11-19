@@ -5,9 +5,9 @@
 #include <filesystem>
 
 // Root folder path
-const std::string ROOT_FOLDER = "C:\\Users\\ASUS\\";
-const std::string FORBIDDEN_SUBFOLDER = "C:\\Users\\your\\folders\\";  // Example for Downloads
-const std::string APPDATA_SUBFOLDER = "C:\\Users\\your\\folder\\"; // Restrict AppData as well
+const std::string ROOT_FOLDER = "C:\\Users\\directory\\";
+const std::string FORBIDDEN_SUBFOLDER = "C:\\Users\\your\\Downloads\\";  // Example for Downloads
+const std::string APPDATA_SUBFOLDER = "C:\\Users\\your\\AppData\\";      // Restrict AppData as well
 
 // Function to monitor clipboard content
 void MonitorClipboard() {
@@ -18,14 +18,16 @@ void MonitorClipboard() {
                 char* pszText = static_cast<char*>(GlobalLock(hData));
                 if (pszText != nullptr) {
                     std::string copiedPath(pszText);
+
                     // Check if the copied path is inside the root folder
                     if (copiedPath.find(ROOT_FOLDER) == 0) {
-                        std::cout << "Clipboard contains: " << copiedPath << "\n";
-                    } else {
-                        std::cout << "Clipboard content is outside the root folder. Not allowed.\n";
-                        // Optionally, clear the clipboard if it's an invalid path
-                        OpenClipboard(nullptr);
+                        std::cout << "Clipboard contains path inside the root folder: " << copiedPath << "\n";
+
+                        // Prevent copying to external locations
+                        std::cout << "Clearing clipboard to restrict external pasting...\n";
                         EmptyClipboard();
+                    } else {
+                        std::cout << "Clipboard content allowed for pasting into the root folder.\n";
                     }
                 }
                 GlobalUnlock(hData);

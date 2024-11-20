@@ -5,7 +5,7 @@
 #include <filesystem>
 
 // Root folder path
-const std::string ROOT_FOLDER = "C:\\Users\\ASUS\\";
+const std::string ROOT_FOLDER = "C:\\your\\folder\\";
 
 // Function to clear the clipboard
 void ClearClipboard() {
@@ -33,7 +33,7 @@ void MonitorClipboard() {
 
                     // Check if the copied file is inside the ASUS folder
                     if (copiedPath.find(ROOT_FOLDER) == 0) {
-                        std::cout << "Copying files outside the ASUS folder is not allowed.\n";
+                        std::cout << "Copying files outside the root folder is not allowed.\n";
 
                         // Clear clipboard to block paste
                         ClearClipboard();
